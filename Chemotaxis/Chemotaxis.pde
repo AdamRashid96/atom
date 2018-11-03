@@ -1,7 +1,7 @@
 Bacteria[] chemotaxis;
 float x_pos;
 float y_pos;
-float radius = 40;
+float radius = 30;
 float colorR = (float)(Math.random() * 255);
 float colorG = (float)(Math.random() * 255);
 float colorB = (float)(Math.random() * 255);
@@ -19,16 +19,13 @@ void setup() {
   }
 }   
 void draw() {
-  background(200);
+  fill(200, 30);
+  rect(0, 0, width, height);
   for (int i = 0; i < chemotaxis.length; i++) {
     chemotaxis[i].show();
   }
-  /*
-  for (int i = 0; i < chemotaxis.length; i++) {
-    chemotaxis[i].move();
-  }
-  */
 }  
+
 class Bacteria {     
   float xPos;
   float yPos;
@@ -47,17 +44,51 @@ class Bacteria {
 
   void show() {
     pushMatrix();
-    fill(0);
-    stroke(5);
     translate(xPos, yPos);
+    noStroke();
     fill(colorR, colorG, colorB);
     ellipse(0, 0, radius, radius);
+    //stroke(5, colorR, colorG, colorB);
     popMatrix();
     move();
+    colorDot();
+    bringIn();
   }
-  
-  void move(){
-    xPos += (float)(Math.random() * 4) - 2;
-    yPos += (float)(Math.random() * 4) - 2;
+
+  void move() {
+    xPos += (float)(Math.random() * 20) - 10;
+    yPos += (float)(Math.random() * 20) - 10;
+  }
+
+  void colorDot() {
+    if (dist(mouseX, mouseY, xPos, yPos) <= 20) {
+      if (mousePressed && mouseButton == RIGHT) {
+        colorR = 0;
+        colorG = 0;
+        colorB = 0;
+      }
+
+      if (mousePressed && mouseButton == CENTER) {
+        colorR = 255;
+        colorG = 255;
+        colorB = 0;
+      }
+    }
+  }
+
+  void bringIn() {
+    if (mousePressed && mouseButton == LEFT) {
+      if (xPos > mouseX)
+        xPos -= 2;
+
+      if (xPos < mouseX)
+        xPos += 2;
+
+      if (yPos > mouseY)
+        yPos -= 2;
+
+      if (yPos < mouseY)
+        yPos += 2;
+    }
   }
 }    
