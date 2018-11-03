@@ -62,14 +62,15 @@ void chemotaxisSim() {
 }
 
 void atomSim() {
-  background(200);
+  fill(200, 20);
+  rect(0, 0, width, height);
   noStroke();
-  
+
   for (int i = 1; i < 100; i++) {
-    fill(154, 250, 225, i);
+    fill(154, 250, 225, i* 0.5);
     ellipse(width/2 - 25, height/2 - 25, 400-(2*i), 400-(2*i));
   }
-  
+
   for (int i = 0; i < oxygen.length; i++) {
     oxygen[i].show();
   }
@@ -144,6 +145,7 @@ class Bacteria {
     move();
     colorDot();
     bringIn();
+    bringOut();
   }
 
   void move() {
@@ -182,6 +184,22 @@ class Bacteria {
         yPos += 3;
     }
   }
+  
+  void bringOut() {
+    if (mousePressed && mouseButton == RIGHT) {
+      if (xPos >= mouseX)
+        xPos += 2;
+
+      if (xPos <= mouseX)
+        xPos -= 2;
+
+      if (yPos > mouseY)
+        yPos += 2;
+
+      if (yPos < mouseY)
+        yPos -= 2;
+    }
+  }
 }   
 
 
@@ -191,11 +209,18 @@ class Atom {
   float temp_x_pos;
   float temp_y_pos;
   float radius;
+  float posX, posY;
+  float radiusX, radiusY;
+  float theta;
   boolean toggleTurn = true;
   public Atom(float x, float y, float radius) {
     xPos = x;
     yPos = y;
     this.radius = radius;
+    posX = posY = 0;
+    radiusX = random(100, 150);
+    radiusY = random(100, 150);
+    theta = 0;
   }
 
   void show() {
@@ -212,6 +237,7 @@ class Atom {
     fill(5, 56, 250);
     ellipse(xPos, yPos, radius, radius);
     bringIn();
+    electron();
   }
 
   void moveRight() {
@@ -226,6 +252,18 @@ class Atom {
     xPos = temp_x_pos;
     yPos = temp_y_pos;
     toggleTurn = !toggleTurn;
+  }
+
+  void electron() {
+    theta += 0.4;
+
+    posX = ((float)(Math.random() * 6) - 3) + radiusX * cos( theta );
+    posY = ((float)(Math.random() * 6) - 3) + radiusY * sin( theta );
+    pushMatrix();
+    translate(width / 2 - 25, height / 2 - 25);
+    fill(234, 234, 234);
+    ellipse( posX, posY, 10, 10);
+    popMatrix();
   }
 
   void bringIn() {
