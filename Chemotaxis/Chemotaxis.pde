@@ -2,6 +2,7 @@ Bacteria[] chemotaxis;
 Atom[] oxygen;
 float x_pos;
 float y_pos;
+float t;
 float radius = 30;
 float colorR = (float)(Math.random() * 255);
 float colorG = (float)(Math.random() * 255);
@@ -11,6 +12,7 @@ int atomicNum = 16;
 void setup() {
   size(800, 600);
   background(200);
+  frameRate(60);
   chemotaxis = new Bacteria[100];
   oxygen = new Atom[atomicNum];
   for (int i = 0; i < chemotaxis.length; i++) {
@@ -62,6 +64,7 @@ void chemotaxisSim() {
 }
 
 void atomSim() {
+  t = frameCount/frameRate;
   fill(200, 20);
   rect(0, 0, width, height);
   noStroke();
@@ -184,7 +187,7 @@ class Bacteria {
         yPos += 3;
     }
   }
-  
+
   void bringOut() {
     if (mousePressed && mouseButton == RIGHT) {
       if (xPos >= mouseX)
@@ -238,6 +241,7 @@ class Atom {
     ellipse(xPos, yPos, radius, radius);
     bringIn();
     electron();
+    println(t);
   }
 
   void moveRight() {
@@ -255,10 +259,10 @@ class Atom {
   }
 
   void electron() {
-    theta += 0.4;
+    theta += 0.1;
 
-    posX = ((float)(Math.random() * 6) - 3) + radiusX * cos( theta );
-    posY = ((float)(Math.random() * 6) - 3) + radiusY * sin( theta );
+    posX = radiusX * cos(theta );
+    posY = radiusY * sin(3*theta );
     pushMatrix();
     translate(width / 2 - 25, height / 2 - 25);
     fill(234, 234, 234);
