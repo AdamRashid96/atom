@@ -70,7 +70,7 @@ void atomSim() {
   rect(0, 0, width, height);
   noStroke();
 
-  for (int i = 1; i < 100; i++) {
+  for (int i = 1; i < 20; i++) {
     fill(154, 250, 225, i* 0.5);
     ellipse(width/2 - 25, height/2 - 25, 400-(2*i), 400-(2*i));
   }
