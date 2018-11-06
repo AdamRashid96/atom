@@ -46,7 +46,7 @@ void draw() {
 }  
 
 void chemotaxisSim() {
-  fill(200, 30);
+  fill(200, 60);
   rect(0, 0, width, height);
   for (int i = 0; i < chemotaxis.length; i++) {
     chemotaxis[i].show();
@@ -71,9 +71,9 @@ void atomSim() {
   rect(0, 0, width, height);
   noStroke();
   int radius = 400;
-  float h = 210;
+  float h = 220;
   for (int r = radius; r > 0; --r) {
-    fill(h, 250, 250, 30);
+    fill(h, 250, 250, 20);
     ellipse(width/2 - 25, height/2 - 25, r, r);
     h = (h-0.5);
   }
