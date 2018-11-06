@@ -235,8 +235,8 @@ class Atom {
   public Atom(float x, float y, float radius) {
     xPos = x;
     yPos = y;
-    multiplierX = 1;
-    multiplierY = 1;
+    multiplierX = random(1, 5);
+    multiplierY = random(1, 5);
     this.radius = radius;
     posX = posY = 0;
     radiusX = random(100, 150);
@@ -276,7 +276,7 @@ class Atom {
   }
 
   void electron() {
-    theta += 0.02;
+    theta += 0.04;
 
     posX = radiusX * cos(multiplierX * theta );
     posY = radiusY * sin(multiplierY * theta );
