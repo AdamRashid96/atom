@@ -2,7 +2,8 @@ Bacteria[] chemotaxis;
 Atom[] oxygen;
 float x_pos;
 float y_pos;
-float t;
+float lastTimeCheck;
+float timeInterval;
 float radius = 30;
 float colorR = (float)(Math.random() * 255);
 float colorG = (float)(Math.random() * 255);
@@ -12,7 +13,8 @@ int atomicNum = 16;
 void setup() {
   size(800, 600);
   background(200);
-  frameRate(60);
+  lastTimeCheck = millis();
+  timeInterval = 2000;
   chemotaxis = new Bacteria[100];
   oxygen = new Atom[atomicNum];
   for (int i = 0; i < chemotaxis.length; i++) {
@@ -64,7 +66,6 @@ void chemotaxisSim() {
 }
 
 void atomSim() {
-  t = frameCount/frameRate;
   fill(200, 20);
   rect(0, 0, width, height);
   noStroke();
@@ -77,6 +78,8 @@ void atomSim() {
   for (int i = 0; i < oxygen.length; i++) {
     oxygen[i].show();
   }
+  
+  changePath();
   fill(0);
   textSize(12);
   text("Return to home >", 70, 15);
@@ -119,6 +122,17 @@ void initScreen() {
     }
   } else {
     cursor(ARROW);
+  }
+}
+
+void changePath() {
+  println(millis());
+  if (millis() > lastTimeCheck + timeInterval) {
+    for (int i = 0; i < oxygen.length; i++) {
+      oxygen[i].multiplierX = random(1, 5);
+      oxygen[i].multiplierY = random(1, 5);
+    }  
+    lastTimeCheck = millis();
   }
 }
 
@@ -215,10 +229,14 @@ class Atom {
   float posX, posY;
   float radiusX, radiusY;
   float theta;
+  float multiplierX;
+  float multiplierY;
   boolean toggleTurn = true;
   public Atom(float x, float y, float radius) {
     xPos = x;
     yPos = y;
+    multiplierX = 1;
+    multiplierY = 1;
     this.radius = radius;
     posX = posY = 0;
     radiusX = random(100, 150);
@@ -241,7 +259,6 @@ class Atom {
     ellipse(xPos, yPos, radius, radius);
     bringIn();
     electron();
-    println(t);
   }
 
   void moveRight() {
@@ -261,8 +278,8 @@ class Atom {
   void electron() {
     theta += 0.1;
 
-    posX = radiusX * cos(theta );
-    posY = radiusY * sin(3*theta );
+    posX = radiusX * cos(multiplierX * theta );
+    posY = radiusY * sin(multiplierY * theta );
     pushMatrix();
     translate(width / 2 - 25, height / 2 - 25);
     fill(234, 234, 234);
