@@ -13,8 +13,9 @@ int atomicNum = 16;
 void setup() {
   size(800, 600);
   background(200);
+  frameRate(60);
   lastTimeCheck = millis();
-  timeInterval = 2000;
+  timeInterval = 1000;
   chemotaxis = new Bacteria[100];
   oxygen = new Atom[atomicNum];
   for (int i = 0; i < chemotaxis.length; i++) {
