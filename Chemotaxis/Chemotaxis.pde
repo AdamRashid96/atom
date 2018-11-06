@@ -276,7 +276,7 @@ class Atom {
   }
 
   void electron() {
-    theta += 0.07;
+    theta += 0.02;
 
     posX = radiusX * cos(multiplierX * theta );
     posY = radiusY * sin(multiplierY * theta );
