@@ -11,11 +11,11 @@ float colorB = (float)(Math.random() * 255);
 int screen = 0;
 int atomicNum = 16;
 void setup() {
+  frameRate(60);
   size(800, 600);
   background(200);
-  frameRate(60);
   lastTimeCheck = millis();
-  timeInterval = 1000;
+  timeInterval = 3000;
   chemotaxis = new Bacteria[100];
   oxygen = new Atom[atomicNum];
   for (int i = 0; i < chemotaxis.length; i++) {
@@ -70,16 +70,23 @@ void atomSim() {
   fill(200, 20);
   rect(0, 0, width, height);
   noStroke();
-
-  for (int i = 1; i < 20; i++) {
-    fill(154, 250, 225, i* 0.5);
-    ellipse(width/2 - 25, height/2 - 25, 400-(2*i), 400-(2*i));
+  int radius = 400;
+  float h = 210;
+  for (int r = radius; r > 0; --r) {
+    fill(h, 250, 250, 30);
+    ellipse(width/2 - 25, height/2 - 25, r, r);
+    h = (h-0.5);
   }
-
+  /*
+  for (int i = 1; i < 20; i++) {
+   fill(154, 250, 225, i*0.5);
+   ellipse(width/2 - 25, height/2 - 25, 400-(2*i), 400-(2*i));
+   }
+   */
   for (int i = 0; i < oxygen.length; i++) {
     oxygen[i].show();
   }
-  
+
   changePath();
   fill(0);
   textSize(12);
@@ -127,11 +134,11 @@ void initScreen() {
 }
 
 void changePath() {
-  println(millis());
   if (millis() > lastTimeCheck + timeInterval) {
     for (int i = 0; i < oxygen.length; i++) {
-      oxygen[i].multiplierX = random(1, 5);
-      oxygen[i].multiplierY = random(1, 5);
+      oxygen[i].multiplierX += random(-0.5, 0.5);
+      oxygen[i].multiplierY += random(-0.5, 0.5);
+      ;
     }  
     lastTimeCheck = millis();
   }
@@ -236,13 +243,13 @@ class Atom {
   public Atom(float x, float y, float radius) {
     xPos = x;
     yPos = y;
-    multiplierX = random(1, 5);
-    multiplierY = random(1, 5);
+    theta = 0;
+    multiplierX = random(1, 6);
+    multiplierY = random(1, 6);
     this.radius = radius;
     posX = posY = 0;
     radiusX = random(100, 150);
     radiusY = random(100, 150);
-    theta = 0;
   }
 
   void show() {
@@ -277,8 +284,7 @@ class Atom {
   }
 
   void electron() {
-    theta += 0.04;
-
+    theta += 0.04; 
     posX = radiusX * cos(multiplierX * theta );
     posY = radiusY * sin(multiplierY * theta );
     pushMatrix();
