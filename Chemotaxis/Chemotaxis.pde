@@ -288,7 +288,7 @@ class Atom {
     posY = radiusY * sin(multiplierY * theta );
     pushMatrix();
     translate(width / 2 - 25, height / 2 - 25);
-    fill(234, 234, 234);
+    fill(180);
     ellipse( posX, posY, 10, 10);
     popMatrix();
   }
