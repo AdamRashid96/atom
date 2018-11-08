@@ -265,7 +265,6 @@ class Atom {
     ellipse(xPos + 5, yPos - 7, radius, radius);
     fill(5, 56, 250);
     ellipse(xPos, yPos, radius, radius);
-    bringIn();
     electron();
   }
 
@@ -292,21 +291,5 @@ class Atom {
     fill(234, 234, 234);
     ellipse( posX, posY, 10, 10);
     popMatrix();
-  }
-
-  void bringIn() {
-    if (mousePressed && mouseButton == LEFT) {
-      if (xPos > mouseX)
-        xPos -= 2;
-
-      if (xPos < mouseX)
-        xPos += 2;
-
-      if (yPos > mouseY)
-        yPos -= 2;
-
-      if (yPos < mouseY)
-        yPos += 2;
-    }
   }
 }    
