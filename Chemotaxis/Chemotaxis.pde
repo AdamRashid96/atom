@@ -67,7 +67,7 @@ void chemotaxisSim() {
 }
 
 void atomSim() {
-  fill(200, 20);
+  fill(200, 50);
   rect(0, 0, width, height);
   noStroke();
   int radius = 400;
